@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.9
 
 MAINTAINER David Coppit <david@coppit.org>
 
@@ -13,7 +13,7 @@ apk --update upgrade && \
 apk add bash curl htop runit && \
 \
 # Needed by our code
-apk add --no-cache python3 icu-libs shadow && \
+apk add --no-cache python3 icu-libs shadow docker && \
 pip3 install watchdog && \
 wget https://raw.githubusercontent.com/phusion/baseimage-docker/9f998e1a09bdcb228af03595092dbc462f1062d0/image/bin/setuser -O /sbin/setuser && \
 chmod +x /sbin/setuser && \
@@ -29,10 +29,6 @@ mkdir -p /etc/run_once /etc/service
 COPY ./boot.sh /sbin/boot.sh
 RUN chmod +x /sbin/boot.sh
 CMD [ "/sbin/boot.sh" ]
-
-VOLUME ["/config", \
-  "/dir1", "/dir2", "/dir3", "/dir4", "/dir5", "/dir6", "/dir7", "/dir8", "/dir9", "/dir10", \
-  "/dir11", "/dir12", "/dir13", "/dir14", "/dir15", "/dir16", "/dir17", "/dir18", "/dir19", "/dir20"]
 
 # Set the locale, to help Python and the user's applications deal with files that have non-ASCII characters
 ENV LANG en_US.UTF-8
