@@ -194,6 +194,8 @@ class ModifyHandler(FileSystemEventHandler):
 #-----------------------------------------------------------------------------------------------------------------------
 
 def run_command(args, event_handler):
+    logging.info("Running command with user ID %s, group ID %s, umask %s and filename %s", args.user_id, args.group_id, args.umask, event_handler.detected_event().src_path)
+    logging.info("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
 
     if args.command != event_handler.detected_event().src_path:
 
@@ -202,9 +204,6 @@ def run_command(args, event_handler):
         # Reset before, in case IGNORE_EVENTS_WHILE_COMMAND_IS_RUNNING is set, and new events come in while the command is
         # running
         event_handler.reset()
-
-        logging.info("Running command with user ID %s, group ID %s, and umask %s", args.user_id, args.group_id, args.umask)
-        logging.info("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv")
 
         event_handler.enable_monitoring(not args.ignore_events_while_command_is_running)
         returncode = subprocess.call([RUNAS, args.user_id, args.group_id, args.umask, JCXLOGSFORWARDER, args.command])
