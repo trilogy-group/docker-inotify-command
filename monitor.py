@@ -205,8 +205,7 @@ def run_command(args, event_handler):
     # running
     # event_handler.reset()
 
-    #event_handler.enable_monitoring(not args.ignore_events_while_command_is_running)
-    event_handler.enable_monitoring(True)
+    event_handler.enable_monitoring(not args.ignore_events_while_command_is_running)
     returncode = subprocess.call([RUNAS, args.user_id, args.group_id, args.umask, JCXLOGSFORWARDER, args.command])
     event_handler.enable_monitoring(True)
 
