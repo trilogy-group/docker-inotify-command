@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.11.6
 
 MAINTAINER David Coppit <david@coppit.org>
 
@@ -6,7 +6,7 @@ ENV TERM=xterm-256color
 
 RUN true && \
 \
-echo "http://dl-cdn.alpinelinux.org/alpine/v3.7/community" >> /etc/apk/repositories && \
+echo "http://dl-cdn.alpinelinux.org/alpine/v3.11/community" >> /etc/apk/repositories && \
 apk --update upgrade && \
 \
 # Basics, including runit
@@ -14,7 +14,7 @@ apk add bash curl htop runit && \
 \
 # Needed by our code
 apk add --no-cache python3 icu-libs shadow docker && \
-pip3 install watchdog && \
+pip3 install watchdog==0.10.2 && \
 wget https://raw.githubusercontent.com/phusion/baseimage-docker/9f998e1a09bdcb228af03595092dbc462f1062d0/image/bin/setuser -O /sbin/setuser && \
 chmod +x /sbin/setuser && \
 \
